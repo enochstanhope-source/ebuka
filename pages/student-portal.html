@@ -22,32 +22,34 @@
         <div class="profile-editor">
             <div class="profile-photo">
                 <img src="../images/nophoto.jpg" alt="Profile Photo" id="profilePhoto">
-                <button class="change-photo" id="changePhoto">
+                <label class="change-photo" id="changePhoto">
                     <i class="fas fa-camera"></i>
-                </button>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                </label>
             </div>
 
-            <form id="profileForm" class="profile-form">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" value="" placeholder="Full name used to register student email" readonly>
+            <div class="student-details">
+                <div class="detail-item">
+                    <label>Full Name:</label>
+                    <p id="studentName">Loading...</p>
                 </div>
-
-                <div class="form-group">
-                    <label for="email">Student Email</label>
-                    <input type="email" id="email" name="email" value="" placeholder="student@school.edu" readonly>
+                <div class="detail-item">
+                    <label>Registration Number:</label>
+                    <p id="regNumber">Loading...</p>
                 </div>
-
-                <div class="form-group">
-                    <label for="regNo">Registration Number</label>
-                    <input type="text" id="regNo" name="regNo" value="" placeholder="Student registration number used during registration" readonly>
-                    <small class="help-text">This registration number will be used to identify your project allocation and is managed from registration.</small>
+                <div class="detail-item">
+                    <label>Email:</label>
+                    <p id="studentEmail">Loading...</p>
                 </div>
-
-                <!-- Save button removed: profile fields are managed from registration -->
-            </form>
+            </div>
         </div>
     </main>
+    <div id="portalDebug" style="position:fixed;right:12px;bottom:12px;background:rgba(0,0,0,0.7);color:#fff;padding:8px;border-radius:6px;font-size:12px;display:none;z-index:9999"></div>
+    <!-- Firebase SDKs (compat) required for auth/firestore/storage -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="../scripts/firebase-init.js"></script>
     <script src="../scripts/student-portal.js"></script>
 </body>
