@@ -104,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const reader = new FileReader();
             reader.onload = function(ev) {
                 profilePhotoImg.src = ev.target.result;
+                // Persist preview immediately so other pages (index) can reflect the change right away.
+                try { localStorage.setItem('studentProfilePhoto', ev.target.result); } catch (e) {}
                 // Save to Firebase Storage if available and user signed in
                 const authUser = (firebase.auth && firebase.auth().currentUser) ? firebase.auth().currentUser : null;
                 if (authUser && firebase.storage) {

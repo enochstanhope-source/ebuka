@@ -355,10 +355,36 @@
     // Fire on initial DOM ready
     window.addEventListener('DOMContentLoaded', scrollToTopNow, { passive: true });
 
+    // Also ensure the small avatar in the header reflects the latest uploaded photo
+    function updateIndexAvatar() {
+      try {
+        const avatarImg = document.querySelector('.profile-row .avatar img');
+        if (!avatarImg) return;
+        // Prefer the cached/local photo saved by the student portal
+        const photo = localStorage.getItem('studentProfilePhoto');
+        if (photo && photo !== 'null' && photo !== '') {
+          // If the stored value is a relative path from the portal (starts with ../), normalize it
+          if (photo.startsWith('../')) avatarImg.src = photo.replace(/^\.\.\//, '');
+          else avatarImg.src = photo;
+        }
+      } catch (e) { /* ignore DOM errors */ }
+    }
+
+    // Update avatar on initial load
+    window.addEventListener('DOMContentLoaded', updateIndexAvatar, { passive: true });
+
     // Fire when page is shown (covers back/forward cache and some refresh behaviors)
     window.addEventListener('pageshow', function (ev) {
       // ev.persisted is true when page is loaded from bfcache
       scrollToTopNow();
+      // when returning to this page (back/forward cache) ensure avatar is refreshed
+      updateIndexAvatar();
+    }, { passive: true });
+
+    // If another tab updates the profile photo, reflect it here immediately
+    window.addEventListener('storage', function (e) {
+      if (!e) return;
+      if (e.key === 'studentProfilePhoto') updateIndexAvatar();
     }, { passive: true });
   </script>
 
