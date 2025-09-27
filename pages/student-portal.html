@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Project Allocation - Student Portal | Polybay</title>
+    <link rel="icon" href="../images/polybay.png" type="image/png" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/portal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="app-screen">
+        <header class="portal-header">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>Student Profile</h1>
+        </header>
+
+        <div class="profile-editor">
+            <div class="profile-photo">
+                <img src="../images/nophoto.jpg" alt="Profile Photo" id="profilePhoto">
+                <button class="change-photo" id="changePhoto">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+
+            <form id="profileForm" class="profile-form">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" value="" placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" value="">
+                </div>
+
+                <div class="form-group">
+                    <label for="regNo">Registration Number</label>
+                    <input type="text" id="regNo" name="regNo" value="23/------" readonly>
+                </div>
+
+                <button type="submit" class="save-button">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
+        </div>
+    </main>
+    <script src="../scripts/firebase-init.js"></script>
+    <script src="../scripts/student-portal.js"></script>
+</body>
+</html>

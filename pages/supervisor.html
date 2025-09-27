@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Project Allocation - Supervisor | Polybay</title>
+    <link rel="icon" href="../images/polybay.png" type="image/png" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/portal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="app-screen">
+        <header class="portal-header">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1>My Supervisor</h1>
+        </header>
+
+        <div class="supervisor-info">
+            <div class="supervisor-card">
+                <img id="supervisorPhoto" src="../images/nophoto.jpg" alt="Supervisor Photo" class="supervisor-photo">
+                <div class="supervisor-details">
+                    <h2>------</h2>
+                    <p class="department">Computer Science Department</p>
+                    
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/2349162919586" class="whatsapp-button" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="updates-section">
+                <h3>Recent Updates</h3>
+                <div class="updates-list" id="supervisorUpdates">
+                    <!-- Updates will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../scripts/firebase-init.js"></script>
+    <script src="../scripts/supervisor.js"></script>
+</body>
+</html>

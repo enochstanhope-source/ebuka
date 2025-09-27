@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+     <meta name="theme-color" content="#2a2431" />
+     <meta name="apple-mobile-web-app-capable" content="yes" />
+     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Project Allocation | Polybay</title>
+    <meta name="description" content="FPNO Skills Hub mobile-style UI" />
+
+    <!-- Keep Firebase SDKs (compat build) and centralized init -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <!-- Initialize Firebase from a single file -->
+    <script src="scripts/firebase-init.js"></script>
+
+    <!-- Styles and fonts -->
+  <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/newsletter.css" />
+    <link rel="stylesheet" href="styles/modal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Roboto for headings (fallbacks to Arial) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/polybay.png" type="image/png" />
+  </head>
+  <body style="padding-top: 30px;">
+      <!-- Main app UI (trimmed, kept) -->
+      <!-- Centered polybag logo fixed at top -->
+     
+      <main class="app-screen" role="main" aria-label="Skill Hub Main Screen" tabindex="0" style="overflow-x:hidden; min-height:100vh;">
+      <header class="app-top">
+         <div class="site-logo" style="touch-action:manipulation;">
+        <img style="width: 100%; height: auto;" src="images/polybay.png" alt="Polybag Logo" draggable="false" />
+      </div>
+        <div class="profile-row" style="margin-top: 18px;">
+          <div class="avatar">
+            <img src="images/nophoto.jpg" alt="avatar" loading="lazy" width="48" height="48" />
+            <span class="medal">3</span>
+          </div>
+          <div class="greeting">Hi, <span class="name">----------</span></div>
+          <div class="small-actions">
+            <i class="fas fa-headset"></i>
+           
+            <i class="fas fa-bell"></i>
+          </div>
+        </div>
+
+        <div class="reg-card">
+          <div class="reg-label">STUDENT REGISTERATION NUMBER :</div>
+          <div class="reg-num"><span>--------</span></div>
+        </div>
+      </header>
+
+      <section class="cards-section">
+        <div class="card tab-card">
+          <div class="tab-title">Project / Portal</div>
+          <div class="tab-icons">
+            <a href="pages/student-portal.html" class="tile allow-guest">
+              <div class="tile-icon"><i class="fas fa-user-graduate"></i></div>
+              <div class="tile-label">Students Portal</div>
+            </a>
+            <a href="pages/supervisor.html" class="tile allow-guest">
+              <div class="tile-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+              <div class="tile-label">My Supervisor</div>
+            </a>
+            <a href="pages/admin.html" class="tile allow-guest">
+              <div class="tile-icon"><i class="fas fa-file"></i></div>
+              <div class="tile-label">My project</div>
+            </a>
+            </div>
+          </div>
+        </div>
+
+      
+
+       
+      </section>
+
+      <nav class="bottom-nav" aria-label="Primary">
+        <a href="login.html" class="nav-login" aria-label="Login to your account">
+          <span class="login-label">Login</span>
+          <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+        </a>
+      </nav>
+    </main>
+</main>
+
+  <script>
+    // Auth-aware UI: supports Firebase auth and localStorage fallback
+    (function() {
+      const navLogin = document.querySelector('.nav-login');
+      const loginLabel = navLogin ? navLogin.querySelector('.login-label') : null;
+
+      function showLoginToaster() {
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = 'You must log in to access this feature';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2600);
+      }
+
+      // Modal helpers: create an overlay element when needed and show simple messages
+      function createModalIfNeeded() {
+        if (document.querySelector('.site-modal-overlay')) return;
+        const overlay = document.createElement('div');
+        overlay.className = 'site-modal-overlay';
+        overlay.innerHTML = `
+          <div class="site-modal-card" role="dialog" aria-modal="true" aria-label="Message">
+            <h3 class="site-modal-title"></h3>
+            <div class="site-modal-message"></div>
+            <div class="site-modal-actions"><button class="site-modal-close">OK</button></div>
+          </div>`;
+        document.body.appendChild(overlay);
+        // close handlers
+        overlay.querySelector('.site-modal-close').addEventListener('click', hideModal);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) hideModal(); });
+      }
+
+      function showModal(title, message, autoCloseMs) {
+        try {
+          createModalIfNeeded();
+          const overlay = document.querySelector('.site-modal-overlay');
+          if (!overlay) return;
+          const t = overlay.querySelector('.site-modal-title');
+          const m = overlay.querySelector('.site-modal-message');
+          t.textContent = title || '';
+          m.textContent = message || '';
+          overlay.classList.add('visible');
+          document.body.classList.add('modal-open');
+          if (autoCloseMs && typeof autoCloseMs === 'number') setTimeout(hideModal, autoCloseMs);
+        } catch (e) { /* ignore */ }
+      }
+
+      function hideModal() {
+        const overlay = document.querySelector('.site-modal-overlay');
+        if (!overlay) return;
+        overlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+      }
+
+      // Disable non-guest tiles and append inline note
+      function disableTilesForLogout() {
+        // Greeting -> show guest state
+        const nameSpan = document.querySelector('.greeting .name');
+        if (nameSpan) nameSpan.textContent = 'Guest (please log in)';
+
+        // Reset avatar to default when logged out
+        try {
+          const avatarImg = document.querySelector('.profile-row .avatar img');
+          if (avatarImg) avatarImg.src = 'images/nophoto.jpg';
+        } catch (e) {}
+
+        // Registration number -> hide when logged out
+        const regLabel = document.querySelector('.reg-label');
+        if (regLabel) regLabel.textContent = 'STUDENT REGISTRATION NUMBER: (log in to view)';
+        const regNum = document.querySelector('.reg-num span');
+        if (regNum) regNum.textContent = '— — — —';
+
+        const tileSelectors = document.querySelectorAll('.tab-icons .tile, .campus-grid .campus-tile');
+        tileSelectors.forEach(el => {
+          // If a tile explicitly allows guest interaction, intercept clicks and show the login toast
+          if (el.classList && el.classList.contains('allow-guest')) {
+            el.addEventListener('click', (ev) => { ev.preventDefault(); showLoginToaster(); });
+            return;
+          }
+
+          const label = el.querySelector('.tile-label') || el.querySelector('div:last-child');
+          if (label) {
+            if (!label.dataset.orig) label.dataset.orig = label.textContent;
+            let note = el.querySelector('.tile-note');
+            if (!note) {
+              note = document.createElement('div');
+              note.className = 'tile-note';
+              note.textContent = 'You must log in to access this feature';
+              el.appendChild(note);
+            } else {
+              note.textContent = 'You must log in to access this feature';
+            }
+          }
+
+          // if link, remove href and keep original in data-orighref
+          if (el.tagName.toLowerCase() === 'a') {
+            const href = el.getAttribute('href');
+            if (href) el.dataset.orighref = href;
+            el.removeAttribute('href');
+          }
+
+          el.classList.add('disabled-tile');
+          el.addEventListener('click', (ev) => { ev.preventDefault(); showLoginToaster(); });
+        });
+
+        // Small actions (icons) - when logged out they show the login toaster
+        document.querySelectorAll('.small-actions i').forEach(icon => {
+          icon.title = 'Log in to access';
+          // Ensure only the login toaster is used in logged-out state
+          icon.onclick = function(e) { e.preventDefault(); showLoginToaster(); };
+          icon.style.cursor = 'pointer';
+        });
+      }
+
+      // Update bottom-nav and tiles based on auth state
+      function updateAuthUI(userOrFlag) {
+        const signedIn = !!(userOrFlag && userOrFlag.uid) || !!userOrFlag === true;
+
+        if (signedIn) {
+          // Populate profile name and reg number from Firebase user or localStorage
+          try {
+            const nameSpan = document.querySelector('.greeting .name');
+            const regSpan = document.querySelector('.reg-num span');
+            // Prefer Firebase displayName when available
+            let displayName = null;
+            let regNumber = null;
+              // avatar handling
+              let photoUrl = null;
+            if (userOrFlag && userOrFlag.displayName) displayName = userOrFlag.displayName;
+            if (!displayName && localStorage.getItem('profileName')) displayName = localStorage.getItem('profileName');
+            if (displayName && nameSpan) nameSpan.textContent = displayName;
+
+              try {
+                const avatarImg = document.querySelector('.profile-row .avatar img');
+                // Prefer photoURL from Firebase user
+                if (userOrFlag && userOrFlag.photoURL) photoUrl = userOrFlag.photoURL;
+                // then prefer locally saved photo
+                if (!photoUrl && localStorage.getItem('studentProfilePhoto')) photoUrl = localStorage.getItem('studentProfilePhoto');
+                // fallback: try Firestore user doc
+                if (!photoUrl && userOrFlag && userOrFlag.uid && typeof firebase !== 'undefined' && firebase.firestore) {
+                  try {
+                    firebase.firestore().collection('users').doc(userOrFlag.uid).get().then(doc => {
+                      if (doc && doc.exists) {
+                        const d = doc.data() || {};
+                        if (d.photo) {
+                          if (avatarImg) avatarImg.src = d.photo;
+                          try { localStorage.setItem('studentProfilePhoto', d.photo); } catch(e){}
+                          return;
+                        }
+                      }
+                    }).catch(() => {});
+                  } catch (e) {}
+                }
+                if (photoUrl && avatarImg) avatarImg.src = photoUrl;
+              } catch (e) { /* ignore */ }
+
+            // Registration number: prefer localStorage, otherwise try Firestore for signed-in users
+            if (localStorage.getItem('profileReg')) regNumber = localStorage.getItem('profileReg');
+            if (!regNumber && userOrFlag && userOrFlag.uid && typeof firebase !== 'undefined' && firebase.firestore) {
+              try {
+                firebase.firestore().collection('users').doc(userOrFlag.uid).get().then(doc => {
+                  if (doc && doc.exists) {
+                    const data = doc.data() || {};
+                    const r = data.reg || null;
+                    if (r && regSpan) {
+                      regSpan.textContent = r;
+                      try { localStorage.setItem('profileReg', r); } catch(e){}
+                    } else if (regSpan && (!r || r.trim() === '')) {
+                      regSpan.textContent = '— — — —';
+                    }
+                  } else if (regSpan) {
+                    regSpan.textContent = '— — — —';
+                  }
+                }).catch(() => { if (regSpan) regSpan.textContent = '— — — —'; });
+              } catch (e) { if (regSpan) regSpan.textContent = '— — — —'; }
+            } else {
+              if (regNumber && regSpan) regSpan.textContent = regNumber;
+              if ((!regNumber || regNumber.trim() === '') && regSpan) regSpan.textContent = '— — — —';
+            }
+          } catch (e) { /* ignore DOM errors */ }
+          // Show Sign out in bottom nav
+          if (loginLabel) loginLabel.textContent = 'Sign out';
+          if (navLogin) {
+            // replace navigation behavior with sign out handler
+            navLogin.setAttribute('href', '#');
+            navLogin.onclick = function(e) {
+              e.preventDefault();
+              // show transition overlay
+              if (window.uiTransitions && window.uiTransitions.showOverlay) window.uiTransitions.showOverlay('Signing out...');
+              // sign out via Firebase if available, otherwise clear local flag
+              if (typeof firebase !== 'undefined' && firebase.auth) {
+                firebase.auth().signOut().then(() => {
+                  localStorage.removeItem('isLoggedIn');
+                  if (window.firebaseHelpers && window.firebaseHelpers.restoreGuestTiles) window.firebaseHelpers.restoreGuestTiles();
+                  updateAuthUI(false);
+                  if (window.uiTransitions && window.uiTransitions.hideOverlay) setTimeout(window.uiTransitions.hideOverlay, 600);
+                }).catch(() => {
+                  // fallback local sign-out
+                  localStorage.removeItem('isLoggedIn');
+                  if (window.firebaseHelpers && window.firebaseHelpers.restoreGuestTiles) window.firebaseHelpers.restoreGuestTiles();
+                  updateAuthUI(false);
+                  if (window.uiTransitions && window.uiTransitions.hideOverlay) setTimeout(window.uiTransitions.hideOverlay, 600);
+                });
+              } else {
+                localStorage.removeItem('isLoggedIn');
+                if (window.firebaseHelpers && window.firebaseHelpers.restoreGuestTiles) window.firebaseHelpers.restoreGuestTiles();
+                updateAuthUI(false);
+                if (window.uiTransitions && window.uiTransitions.hideOverlay) setTimeout(window.uiTransitions.hideOverlay, 600);
+              }
+            };
+          }
+          // Restore guest-enabled tiles (firebase-init also does this on auth change)
+          if (window.firebaseHelpers && window.firebaseHelpers.restoreGuestTiles) window.firebaseHelpers.restoreGuestTiles();
+          // Signed-in small action handlers: headset -> Coming soon, bell -> No notifications
+          try {
+            const icons = document.querySelectorAll('.small-actions i');
+            icons.forEach(i => { i.style.cursor = 'pointer'; i.title = ''; i.onclick = null; });
+            const headset = document.querySelector('.small-actions .fa-headset') || document.querySelector('.small-actions i.fas:nth-child(1)');
+            const bell = document.querySelector('.small-actions .fa-bell') || document.querySelector('.small-actions i.fas:nth-child(2)');
+            if (headset) headset.addEventListener('click', (e) => { e.preventDefault(); showModal('Coming soon', 'This feature is coming soon.', 4000); });
+            if (bell) bell.addEventListener('click', (e) => { e.preventDefault(); showModal('No notifications', 'No notifications currently.', 4000); });
+          } catch (e) { /* ignore */ }
+        } else {
+          // Show Login and enforce logged-out UI
+          if (loginLabel) loginLabel.textContent = 'Login';
+          if (navLogin) {
+            navLogin.setAttribute('href', 'login.html');
+            navLogin.onclick = null;
+          }
+          disableTilesForLogout();
+        }
+      }
+
+      // Observe Firebase auth state if available
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            updateAuthUI(user);
+          } else {
+            // check localStorage fallback
+            const localFlag = !!localStorage.getItem('isLoggedIn');
+            updateAuthUI(localFlag);
+          }
+        });
+      } else {
+        // No Firebase: use localStorage fallback
+        document.addEventListener('DOMContentLoaded', () => {
+          const localFlag = !!localStorage.getItem('isLoggedIn');
+          updateAuthUI(localFlag);
+        });
+      }
+    })();
+    // Ensure the page always loads at the top (prevents browsers restoring previous scroll position)
+    try {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    function scrollToTopNow() {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+
+    // Fire on initial DOM ready
+    window.addEventListener('DOMContentLoaded', scrollToTopNow, { passive: true });
+
+    // Fire when page is shown (covers back/forward cache and some refresh behaviors)
+    window.addEventListener('pageshow', function (ev) {
+      // ev.persisted is true when page is loaded from bfcache
+      scrollToTopNow();
+    }, { passive: true });
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="images/polybay.png" type="image/png">
+	<title>Project Allocation - Sign Up | Polybay</title>
+	<link rel="stylesheet" href="styles/signup.css">
+	
+	<!-- Firebase SDKs and centralized init -->
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+	<script src="scripts/firebase-init.js"></script>
+	<!-- Your custom JavaScript -->
+	<script src="scripts/signup.js" defer></script>
+</head>
+<body>
+	<!-- Signup Success Modal Overlay (simplified) -->
+	<div id="signupSuccessModal" class="signup-success-modal" style="display:none;">
+		<div class="signup-success-modal-content" style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;">
+			<svg width="40" height="40" viewBox="0 0 50 50" aria-hidden="true">
+				<circle cx="25" cy="25" r="20" stroke="#ccc" stroke-width="5" fill="none" opacity="0.25" />
+				<circle cx="25" cy="25" r="20" stroke="#ff1a1a" stroke-width="5" stroke-dasharray="100" stroke-dashoffset="60" style="animation:spinSvg 1s linear infinite;" />
+			</svg>
+			<div class="loader-label" style="font-weight:600;color:#222;">Creating account...</div>
+		</div>
+	</div>
+	<a href="index.html" class="back-home-btn">&larr; Back to Home</a>
+	<div class="logo" style="position: absolute; left: 50%; top: 40px; transform: translateX(-50%); z-index: 10;">
+		<a href="index.html">
+			<img src="images/polybay.png" alt="G-ONE Logo" width="160" height="50" />
+		</a>
+	</div>
+	<div class="signup-container">
+		<button type="button" class="cancel-x-btn" aria-label="Cancel">&times;</button>
+	<form class="signup-form" id="signupForm">
+			<h2>Sign Up</h2>
+			<div class="form-fields">
+				<div class="input-group">
+					<label for="username">Full Name</label>
+					<input type="text" id="username" name="username" required placeholder="Enter Students full name">
+				</div>
+				<div class="input-group">
+					<label for="reg-number">Enter Reg. Number</label>
+					<input type="text" id="reg-number" name="reg-number" placeholder="Reg. No or skip if none">
+				</div>
+				<div class="input-group">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="email" required placeholder="Email">
+				</div>
+				<div class="input-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" required placeholder="Password">
+				</div>
+				<div class="input-group">
+					<label for="confirm-password">Confirm Password</label>
+					<input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm Password">
+				</div>
+				<button type="submit" class="join-btn" style="width: 190px; margin-top: 45px; display: block; margin-left: auto; margin-right: auto;">Create Account</button>
+			</div>
+				<div class="login-link">
+					Already have an account? <a href="login.html">Login</a>
+				</div>
+			</form>
+		</div>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var cancelBtn = document.querySelector('.cancel-x-btn');
+		if (cancelBtn) {
+			cancelBtn.addEventListener('click', function() {
+				window.location.href = 'index.html';
+			});
+		}
+	});
+
+// Loader modal logic
+function showSignupLoader() {
+	const modal = document.getElementById('signupSuccessModal');
+	if (modal) {
+		modal.style.display = 'flex';
+		// Animate progress bar
+		const progress = modal.querySelector('.loader-progress');
+		if (progress) {
+			progress.style.width = '0%';
+			setTimeout(() => { progress.style.width = '100%'; }, 100);
+		}
+	}
+}
+function hideSignupLoader() {
+	const modal = document.getElementById('signupSuccessModal');
+	if (modal) modal.style.display = 'none';
+}
+	    </script>
+
+</body>
+</html>

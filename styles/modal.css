@@ -1,0 +1,65 @@
+/* Simple centered modal used by the app for small messages */
+:root{
+  --modal-bg: rgba(0,0,0,0.48);
+  --card-bg: #ffffff;
+  --card-radius: 12px;
+  --card-padding: 18px;
+  --card-width: 88%;
+  --card-max-width: 420px;
+  --text-color: #2a2431;
+}
+
+.site-modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: var(--modal-bg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  -webkit-tap-highlight-color: transparent;
+}
+.site-modal-overlay.visible{ display: flex; }
+
+.site-modal-card{
+  background: var(--card-bg);
+  color: var(--text-color);
+  width: var(--card-width);
+  max-width: var(--card-max-width);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transform: translateY(6px);
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+.site-modal-overlay.visible .site-modal-card{ transform: translateY(0); }
+
+.site-modal-title{
+  font-weight:700;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+.site-modal-message{
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.site-modal-actions{ display:flex; justify-content:flex-end; gap:8px; }
+.site-modal-close{
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.site-modal-close:focus{ outline: 2px solid rgba(0,0,0,0.12); }
+
+/* Small devices adjustments */
+@media (min-width:520px){
+  .site-modal-card{ padding:22px; }
+}
+
+/* prevent background scroll when modal open */
+body.modal-open{ overflow: hidden; }

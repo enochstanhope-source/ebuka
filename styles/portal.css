@@ -1,0 +1,74 @@
+/* Portal page styles aligned with main index design */
+
+/* Use the same font and variables from index.css */
+body { font-family: var(--font-primary); }
+
+.portal-header {
+  padding: 16px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background: linear-gradient(90deg, rgba(229,91,91,0.95), rgba(255,123,123,0.95));
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.portal-header .back-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:18px;
+}
+
+.portal-header h1 { color:#fff; margin:0; font-size:1.15rem; font-weight:700 }
+
+.profile-editor { padding: 20px; max-width:720px; margin: 0 auto }
+
+.profile-photo { position:relative; width:110px; height:110px; margin: 14px auto }
+.profile-photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; box-shadow:0 8px 22px rgba(0,0,0,0.45); border:3px solid rgba(255,255,255,0.06) }
+.change-photo { position:absolute; right:-2px; bottom:-2px; background:var(--primary-color); border:none; color:#111; padding:8px; border-radius:50%; cursor:pointer }
+
+.profile-form { background: linear-gradient(180deg, rgba(58,47,74,0.6), rgba(42,34,51,0.6)); padding:16px; border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.5) }
+.form-group { margin-bottom:12px }
+.form-group label { display:block; color:#fff; margin-bottom:6px; font-weight:700 }
+.form-group input { width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color:#fff }
+.form-group input:focus { outline:none; box-shadow:0 6px 20px rgba(229,91,91,0.12); border-color: rgba(229,91,91,0.9) }
+
+.save-button { width:100%; padding:12px; border-radius:10px; border:none; background:var(--primary-color); color:#111; font-weight:800; box-shadow:0 10px 30px rgba(229,91,91,0.18); cursor:pointer }
+.save-button i { margin-right:8px }
+
+/* Supervisor */
+.supervisor-info { padding:18px }
+.supervisor-card { display:flex; gap:14px; align-items:center; background: linear-gradient(180deg, rgba(58,47,74,0.6), rgba(42,34,51,0.6)); padding:14px; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.45) }
+.supervisor-photo { width:88px; height:88px; border-radius:50%; object-fit:cover; box-shadow:0 8px 20px rgba(0,0,0,0.4) }
+.supervisor-details h2 { margin:0; color:#fff; font-size:1.05rem }
+.department { color: rgba(255,255,255,0.8); margin-bottom:8px }
+.contact-buttons { display:flex; gap:10px; flex-direction:column }
+.whatsapp-button, .email-button { display:inline-flex; gap:8px; align-items:center; justify-content:center; padding:10px 12px; border-radius:10px; font-weight:700; text-decoration:none }
+.whatsapp-button { background:#25D366; color:#022 }
+.email-button { background: linear-gradient(90deg, var(--primary-color), #ff7b7b); color:#111 }
+
+.updates-section { margin-top:14px; background: linear-gradient(180deg, rgba(19,7,30,0.55), rgba(74,52,52,0.55)); padding:12px; border-radius:12px }
+.updates-section h3 { color:var(--primary-color); margin:0 0 8px 0 }
+.updates-list { display:flex; flex-direction:column; gap:8px }
+.update-item { background: rgba(255,255,255,0.02); padding:10px; border-radius:8px; color: #f3e9e9 }
+.update-date { font-size:0.8rem; opacity:0.75 }
+
+/* Toast */
+.toast { position:fixed; left:50%; transform:translateX(-50%); bottom:90px; background:rgba(0,0,0,0.85); color:#fff; padding:10px 14px; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.6); z-index:2000 }
+
+@media (max-width:480px) {
+  .portal-header { padding:12px }
+  .portal-header h1 { font-size:1rem }
+  .profile-photo { width:88px; height:88px }
+  .supervisor-card { flex-direction:row; gap:12px }
+  .contact-buttons { flex-direction:column }
+  .save-button { padding:10px }
+}

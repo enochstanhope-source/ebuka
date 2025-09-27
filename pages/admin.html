@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Allocation - My Project | Polybay</title>
+  <link rel="icon" href="../images/polybay.png" type="image/png" />
+  <link rel="stylesheet" href="../styles/index.css" />
+  <link rel="stylesheet" href="../styles/admin.css" />
+</head>
+<body>
+  <main class="app-screen">
+    <header class="portal-header">
+      <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+      <h1>My Project</h1>
+    </header>
+
+    <section class="project-area">
+      <div class="project-intro" style="color: yellow">
+        <p><strong style="color: red;">Instructions:</strong> Fill the 3 project topics (short titles) boxes below. And submit for review. After submission, the supervisor will review and set the project status (Accepted / Rejected / Pending).</p>
+        <p><strong style="color: red;">Important:</strong> After submission you may use the supervisor page to contact them, and stay updated.</p>
+      </div>
+
+      <form id="projectForm" class="project-form">
+        <label>Topic 1 <input id="topic1" maxlength="100" placeholder="Short title for topic 1" /></label>
+        <label>Topic 2 <input id="topic2" maxlength="100" placeholder="Short title for topic 2" /></label>
+        <label>Topic 3 <input id="topic3" maxlength="100" placeholder="Short title for topic 3" /></label>
+
+      
+
+        <div class="submit-row">
+          <button id="submitProject" type="submit">Submit for review</button>
+          <div id="submitStatus" class="submit-status"></div>
+        </div>
+      </form>
+
+      <section class="project-status">
+        <h3>Project Status</h3>
+        <div class="status-row">Status: <span id="statusText">-</span></div>
+        <div class="status-row">Duplicate: <span id="duplicateText">-</span></div>
+        <div class="status-row">Reason: <span id="reasonText">-</span></div>
+      </section>
+
+      <section id="adminPanel" class="admin-panel" style="display:none;">
+        <h3>Admin / Supervisor Controls</h3>
+        <label>Status:
+          <select id="adminStatus">
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </label>
+        <label>Duplicate? <select id="adminDuplicate"><option value="no">No</option><option value="yes">Yes</option></select></label>
+        <label>Reason (optional)
+          <textarea id="adminReason" rows="3" placeholder="Provide a reason if rejecting or marking duplicate"></textarea>
+        </label>
+        <div class="submit-row">
+          <button id="adminSave">Save</button>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- WhatsApp notification modal -->
+  <div id="whatsappModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="whatsappTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <h3 id="whatsappTitle">Supervisor Notification</h3>
+      <p id="modalMsg">Topic are valid, Your supervisor will message you on WhatsApp on the one picked.</p>
+      <div class="modal-actions">
+        <button id="modalOk">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/firebase-init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  <script src="../scripts/admin.js"></script>
+</body>
+</html>

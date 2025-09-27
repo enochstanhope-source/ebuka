@@ -1,0 +1,401 @@
+/* Admin/project submission styles - consistent with index.css theme */
+:root {
+  --admin-gradient: linear-gradient(180deg, rgba(229,91,91,0.08), rgba(255,255,255,0.01));
+  --card-border: 1px solid rgba(255,255,255,0.08);
+  --card-shadow: 0 8px 24px rgba(0,0,0,0.45);
+}
+
+body { 
+  font-family: var(--font-primary, 'Inter', system-ui, -apple-system, sans-serif);
+  color: #fff;
+  background: linear-gradient(180deg,#081436, #2a2431 100%);
+  min-height: 100vh;
+}
+
+.project-area { 
+  padding: 20px;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.portal-header { 
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 20px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+}
+
+.portal-header h1 { 
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.back-button { 
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--admin-gradient);
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.back-button i { 
+  font-size: 18px;
+}
+
+.project-intro { 
+  background: var(--admin-gradient);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
+  border: var(--card-border);
+  color: rgba(255,255,255,0.95);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: var(--card-shadow);
+}
+
+.project-intro p + p {
+  margin-top: 12px;
+}
+
+.project-form { 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-form label { 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.project-form input[type="text"],
+.project-form input[type="file"],
+.project-form textarea,
+.project-form input,
+.project-form select { 
+  width: 100%;
+  padding: 12px 16px;
+  border: var(--card-border);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.project-form input:focus,
+.project-form textarea:focus,
+.project-form select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: rgba(255,255,255,0.06);
+}
+
+.project-form input::placeholder,
+.project-form textarea::placeholder { 
+  color: rgba(255,255,255,0.4);
+}
+
+.project-form textarea { 
+  resize: vertical;
+  min-height: 100px;
+}
+
+.preview-wrap { 
+  margin: 16px 0;
+  text-align: center;
+}
+
+.preview-wrap img { 
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+}
+
+.submit-row { 
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+#submitProject {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#submitProject:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(229,91,91,0.4);
+}
+
+.submit-status { 
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+}
+
+.project-status { 
+  margin-top: 24px;
+  background: var(--admin-gradient);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+}
+
+.project-status h3 {
+  margin: 0 0 16px 0;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.status-row { 
+  margin: 12px 0;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  gap: 8px;
+}
+
+/* Status text colors */
+#statusText.accepted {
+  color: #39c869; /* bright green */
+  font-weight: 700;
+  text-transform: capitalize;
+}
+#statusText.rejected {
+  color: #ff6b6b; /* red */
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+/* Reason text colors to match status */
+#reasonText.accepted {
+  color: #7feea7; /* light green */
+  font-weight: 600;
+}
+#reasonText.rejected {
+  color: #ffb3b3; /* light red */
+  font-weight: 600;
+}
+#reasonText.pending {
+  color: rgba(255,255,255,0.85);
+}
+
+/* Duplicate text colors */
+#duplicateText.duplicate {
+  color: #ff6b6b; /* red */
+  font-weight: 700;
+}
+#duplicateText.no-dup {
+  color: #7feea7; /* green */
+  font-weight: 700;
+}
+
+.admin-panel { 
+  margin-top: 24px;
+  background: var(--admin-gradient);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(229,91,91,0.15);
+  box-shadow: var(--card-shadow);
+}
+
+.admin-panel h3 {
+  margin: 0 0 16px 0;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.admin-panel label { 
+  display: block;
+  margin-bottom: 12px;
+  color: rgba(255,255,255,0.95);
+}
+
+/* Buttons - primary and secondary consistent with index.css */
+.btn { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; border:none }
+.btn-primary { background: linear-gradient(90deg, var(--primary-color, #E55B5B), #ff7b7b); color:#111; box-shadow: 0 8px 20px rgba(229,91,91,0.18) }
+.btn-ghost { background: rgba(255,255,255,0.04); color: #fff; border:1px solid rgba(255,255,255,0.06) }
+
+#submitProject, #adminSave {
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	cursor:pointer;
+	padding:10px 14px;
+	border-radius:10px;
+	font-weight:700;
+	border: none;
+}
+
+/* default: submit uses the primary gradient; admin save uses a ghost style */
+#submitProject {
+	background: linear-gradient(90deg, var(--primary-color, #E55B5B), #ff7b7b);
+	color: #111;
+	box-shadow: 0 8px 20px rgba(229,91,91,0.18);
+}
+#adminSave {
+	background: rgba(255,255,255,0.06);
+	color: #fff;
+	border: 1px solid rgba(255,255,255,0.06);
+}
+
+#submitProject:active, #adminSave:active { transform: translateY(1px) }
+#submitProject:focus, #adminSave:focus { outline: 3px solid rgba(229,91,91,0.12); outline-offset: 3px }
+
+/* small helpers */
+.muted { color: rgba(255,255,255,0.6); font-size:0.92rem }
+
+/* Responsive form: use two columns on wider screens */
+/* Status badges with improved visibility */
+.badge { 
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.pending { 
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.badge.accepted { 
+  background: rgba(57,200,105,0.15);
+  color: #7feea7;
+  border: 1px solid rgba(57,200,105,0.2);
+}
+
+.badge.rejected { 
+  background: rgba(255,95,95,0.15);
+  color: #ffb3b3;
+  border: 1px solid rgba(255,95,95,0.2);
+}
+
+/* Admin panel form elements */
+.admin-panel select,
+.admin-panel textarea { 
+  background: rgba(0,0,0,0.25);
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  border: var(--card-border);
+  width: 100%;
+  margin-top: 8px;
+}
+
+.admin-panel select:focus,
+.admin-panel textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-area {
+    padding: 16px;
+  }
+  
+  .portal-header {
+    padding: 16px;
+  }
+  
+  .preview-wrap img {
+    max-width: 100%;
+  }
+  
+  .submit-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  #submitProject {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .portal-header h1 {
+    font-size: 18px;
+  }
+  
+  .back-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .project-intro,
+  .project-status,
+  .admin-panel {
+    padding: 16px;
+  }
+  
+  .project-form input[type="text"],
+  .project-form input[type="file"],
+  .project-form textarea,
+  .project-form input,
+  .project-form select {
+    padding: 10px 14px;
+  }
+  
+  .badge {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Modal styles for WhatsApp notification */
+.modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); z-index: 9999; }
+.modal[aria-hidden="false"] { display: flex; }
+.modal-content { background: #0f1724; color: #fff; padding: 20px; border-radius: 12px; max-width: 420px; width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.04); }
+.modal-close { background: transparent; border: none; color: #fff; font-size: 22px; position: absolute; right: 18px; top: 14px; cursor: pointer; }
+.modal-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+.modal-actions button { background: var(--primary-color); color: #111; padding: 8px 14px; border-radius: 10px; border: none; font-weight: 700; }
+
+/* Modal message status colors */
+#modalMsg.accepted {
+  color: #7feea7; /* light green */
+  font-weight: 600;
+}
+#modalMsg.rejected {
+  color: #ffb3b3; /* light red */
+  font-weight: 600;
+}
+
