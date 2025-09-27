@@ -29,23 +29,22 @@
 
             <form id="profileForm" class="profile-form">
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" value="" placeholder="Enter your phone number">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" value="" placeholder="Full name used to register student email" readonly>
                 </div>
 
                 <div class="form-group">
-                    <label for="dob">Date of Birth</label>
-                    <input type="date" id="dob" name="dob" value="">
+                    <label for="email">Student Email</label>
+                    <input type="email" id="email" name="email" value="" placeholder="student@school.edu" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="regNo">Registration Number</label>
-                    <input type="text" id="regNo" name="regNo" value="23/------" readonly>
+                    <input type="text" id="regNo" name="regNo" value="" placeholder="Student registration number used during registration" readonly>
+                    <small class="help-text">This registration number will be used to identify your project allocation and is managed from registration.</small>
                 </div>
 
-                <button type="submit" class="save-button">
-                    <i class="fas fa-save"></i> Save Changes
-                </button>
+                <!-- Save button removed: profile fields are managed from registration -->
             </form>
         </div>
     </main>
