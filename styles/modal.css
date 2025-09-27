@@ -18,6 +18,12 @@
   justify-content: center;
   z-index: 9999;
   -webkit-tap-highlight-color: transparent;
+  /* allow smooth touch-scrolling on mobile when overlay is present */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  /* Let touch/scroll gestures pass through the dim background so the page doesn't get stuck.
+     The modal card itself remains interactive. */
+  pointer-events: none;
 }
 .site-modal-overlay.visible{ display: flex; }
 
@@ -31,7 +37,12 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   transform: translateY(6px);
   transition: transform 160ms ease, opacity 160ms ease;
+  /* ensure card itself handles pointer events while overlay allows page scroll on mobile */
+  pointer-events: auto;
 }
+
+/* When overlay is visible, allow only the modal card to receive pointer events */
+.site-modal-overlay.visible .site-modal-card { pointer-events: auto; }
 .site-modal-overlay.visible .site-modal-card{ transform: translateY(0); }
 
 .site-modal-title{
@@ -62,4 +73,8 @@
 }
 
 /* prevent background scroll when modal open */
-body.modal-open{ overflow: hidden; }
+/* Keep the original behaviour (prevent background scroll) only on larger screens.
+   On mobile we let the page scroll to avoid intermittent 'stuck' behaviour. */
+@media (min-width: 769px) {
+  body.modal-open { overflow: hidden; }
+}

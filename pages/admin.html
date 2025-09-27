@@ -14,6 +14,24 @@
       <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
       <h1>My Project</h1>
     </header>
+    <!-- Fast back-button handler: navigate on pointerdown/touchstart to avoid click delay -->
+    <script>
+      (function(){
+        try {
+          var back = document.querySelector('.back-button');
+          if (!back) return;
+          var href = back.getAttribute('href');
+          if (!href) return;
+          function nav() {
+            // navigate immediately without waiting for other scripts to finish loading
+            window.location.href = href;
+          }
+          if (window.PointerEvent) back.addEventListener('pointerdown', nav, {passive:true});
+          else if ('ontouchstart' in window) back.addEventListener('touchstart', nav, {passive:true});
+          else back.addEventListener('mousedown', nav, {passive:true});
+        } catch (e) { /* ignore on old browsers */ }
+      })();
+    </script>
 
     <section class="project-area">
       <div class="project-intro" style="color: yellow">

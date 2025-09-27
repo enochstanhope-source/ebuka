@@ -15,6 +15,9 @@
     overlay.style.background = 'rgba(20,20,40,0.6)';
     overlay.style.zIndex = '99999';
     overlay.style.backdropFilter = 'blur(6px)';
+  // allow vertical touch scrolling to pass through on mobile devices
+  overlay.style.touchAction = 'pan-y';
+  overlay.style.webkitOverflowScrolling = 'touch';
     // Add stylesheet for polished spinner card
     if (!document.getElementById('uiTransitionsStyle')) {
       const s = document.createElement('style');
